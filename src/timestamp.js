@@ -72,7 +72,6 @@ export class TimeStampNormaliser {
             }
         });
 
-        return sources;
     }
 
     assignNewTimeStamp(item) {
