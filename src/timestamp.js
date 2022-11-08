@@ -71,6 +71,7 @@ export class TimeStampNormaliser {
                 this.assignNewTimeStamp(item);
             }
         });
+        console.log(this.fileTimeStampMaps);
 
     }
 
@@ -103,7 +104,12 @@ export class TimeStampNormaliser {
             src = 'src';
             type = 'script';
         }
-        const fileName = element[src].split('?');
+        const fileName = element[src] && element[src].split('?');
+
+        if(!fileName) {
+            return false;
+        }
+        
         const params = new URLSearchParams(fileName[1]);
         const timeStamp = params.get('v');
         const map = this.getFileTimeStampMap(fileName[0]);
@@ -140,11 +146,11 @@ export class TimeStampNormaliser {
         return sources;
     }
 
-    getFileTimeStampMap(item) {
-        if (!this.fileTimeStampMaps.has(item.fileName)) {
-            this.fileTimeStampMaps.set(item.fileName, new FileTimeStamp());
+    getFileTimeStampMap(fileName) {
+        if (!this.fileTimeStampMaps.has(fileName)) {
+            this.fileTimeStampMaps.set(fileName, new FileTimeStamp());
         }
-        return this.fileTimeStampMaps.get(item.fileName);
+        return this.fileTimeStampMaps.get(fileName);
     }
 
 }
